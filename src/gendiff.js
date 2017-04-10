@@ -16,6 +16,14 @@ const compare = (obj1, obj2, key) => {
 
 
 export default (pathToFile1, pathToFile2) => {
+  if (!fs.existsSync(pathToFile1)) {
+    return `File "${pathToFile1}" not exist!`;
+  }
+
+  if (!fs.existsSync(pathToFile2)) {
+    return `File "${pathToFile2}" not exist!`;
+  }
+
   const file1 = JSON.parse(fs.readFileSync(pathToFile1));
   const file2 = JSON.parse(fs.readFileSync(pathToFile2));
 
