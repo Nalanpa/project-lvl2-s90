@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/Nalanpa/project-lvl2-s90#readme",
   "dependencies": {
+    "commander": "^2.9.0",
     "gulp": "*"
   },
   "devDependencies": {
