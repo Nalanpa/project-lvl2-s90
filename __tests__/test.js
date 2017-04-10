@@ -1,16 +1,19 @@
 // @flow
 
-import gendiff from '../src/gendiff';
+import gendiff from '../src';
 
-const jsonFile1 = '__tests__/before.json';
-const jsonFile2 = '__tests__/after.json';
-const ymlFile1 = '__tests__/before.yml';
-const ymlFile2 = '__tests__/after.yml';
-const wrongTypeFile = '__tests__/somefile.type';
+const jsonFile1 = '__tests__/__fixtures__/before.json';
+const jsonFile2 = '__tests__/__fixtures__/after.json';
+const ymlFile1 = '__tests__/__fixtures__/before.yml';
+const ymlFile2 = '__tests__/__fixtures__/after.yml';
+const iniFile1 = '__tests__/__fixtures__/before.ini';
+const iniFile2 = '__tests__/__fixtures__/after.ini';
+const wrongFile = '__tests__/__fixtures__/somefile.type';
+const wrongType = '.type';
 const notExistenFile = 'not_existen_file';
 
 const fileNotExistResult = `ERROR: File "${notExistenFile}" not exist!`;
-const unknownFileTypeResult = `ERROR: Unknown file type: "${wrongTypeFile}"`;
+const unknownFileTypeResult = `ERROR: Unknown file type: "${wrongType}"`;
 
 const testResult = `{
     host: hexlet.io
@@ -27,8 +30,8 @@ test('File exist', () => {
 });
 
 test('Unknown file type', () => {
-  expect(gendiff(wrongTypeFile, jsonFile2)).toEqual(unknownFileTypeResult);
-  expect(gendiff(jsonFile1, wrongTypeFile)).toEqual(unknownFileTypeResult);
+  expect(gendiff(wrongFile, jsonFile2)).toEqual(unknownFileTypeResult);
+  expect(gendiff(jsonFile1, wrongFile)).toEqual(unknownFileTypeResult);
 });
 
 test('Compare JSONs', () => {
@@ -37,6 +40,10 @@ test('Compare JSONs', () => {
 
 test('Compare YAMLs', () => {
   expect(gendiff(ymlFile1, ymlFile2)).toEqual(testResult);
+});
+
+test('Compare INIs', () => {
+  expect(gendiff(iniFile1, iniFile2)).toEqual(testResult);
 });
 
 test('Compare JSON with YAML', () => {

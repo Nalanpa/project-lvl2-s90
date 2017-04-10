@@ -1,35 +1,36 @@
-import parse from './parse';
+import _ from 'lodash';
+import fileToObject from './file_to_object';
+
 
 const compareKey = (obj1, obj2, key) => {
+  const intend1 = ' '.repeat(2);
+  const intend2 = ' '.repeat(4);
+
   if (obj1[key] && !obj2[key]) {
-    return `  - ${key}: ${obj1[key]}\n`;
+    return `${intend1}- ${key}: ${obj1[key]}\n`;
   } else if (!obj1[key] && obj2[key]) {
-    return `  + ${key}: ${obj2[key]}\n`;
+    return `${intend1}+ ${key}: ${obj2[key]}\n`;
   } else if (!obj1[key] && !obj2[key]) {
     return '';
   } else if (obj1[key] !== obj2[key]) {
-    return `  + ${key}: ${obj2[key]}\n  - ${key}: ${obj1[key]}\n`;
+    return `${intend1}+ ${key}: ${obj2[key]}\n  - ${key}: ${obj1[key]}\n`;
   }
 
-  return `    ${key}: ${obj1[key]}\n`;
+  return `${intend2}${key}: ${obj1[key]}\n`;
 };
 
 
 const compare = (obj1, obj2) => {
-  const obj1Keys = Object.keys(obj1)
+  const result = _.union(Object.keys(obj1), Object.keys(obj2))
     .reduce((acc, key) => acc + compareKey(obj1, obj2, key), '');
 
-  const obj2Keys = Object.keys(obj2)
-    .filter(key => !obj1[key])
-    .reduce((acc, key) => acc + compareKey(obj1, obj2, key), '');
-
-  return `{\n${obj1Keys}${obj2Keys}}`;
+  return `{\n${result}}`;
 };
 
 
 export default (pathToFile1, pathToFile2) => {
-  const file1 = parse(pathToFile1);
-  const file2 = parse(pathToFile2);
+  const file1 = fileToObject(pathToFile1);
+  const file2 = fileToObject(pathToFile2);
 
   if (typeof file1 === 'string') {
     return file1;

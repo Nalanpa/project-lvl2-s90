@@ -1,19 +1,15 @@
-import fs from 'fs';
 import yaml from 'js-yaml';
+import ini from 'ini';
 
-
-export default (pathToFile) => {
-  if (!fs.existsSync(pathToFile)) {
-    return `ERROR: File "${pathToFile}" not exist!`;
+export default (content, type) => {
+  switch (type) {
+    case '.json':
+      return JSON.parse(content);
+    case '.yml':
+      return yaml.safeLoad(content);
+    case '.ini':
+      return ini.parse(String(content));
+    default:
+      return `ERROR: Unknown file type: "${type}"`;
   }
-
-  const fileContent = fs.readFileSync(pathToFile);
-
-  if (pathToFile.substr(-5) === '.json') {
-    return JSON.parse(fileContent);
-  } else if (pathToFile.substr(-4) === '.yml') {
-    return yaml.safeLoad(fileContent);
-  }
-
-  return `ERROR: Unknown file type: "${pathToFile}"`;
 };
