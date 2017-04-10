@@ -8,7 +8,7 @@ const parser = {
 };
 
 export default (content, format) => {
-  if (parser[format] === undefined) {
+  if (!parser[format]) {
     return `ERROR: Unknown file type: "${format}"`;
   }
 

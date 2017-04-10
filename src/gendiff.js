@@ -29,8 +29,8 @@ const compare = (obj1, obj2) => {
 
 
 export default (pathToFile1, pathToFile2) => {
-  const file1 = readFile(pathToFile1);
-  const file2 = readFile(pathToFile2);
+  const [file1, file2] = [pathToFile1, pathToFile2]
+    .map(file => readFile(file));
 
   if (typeof file1 === 'string') {
     return file1;
