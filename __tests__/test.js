@@ -6,9 +6,11 @@ const jsonFile1 = '__tests__/before.json';
 const jsonFile2 = '__tests__/after.json';
 const ymlFile1 = '__tests__/before.yml';
 const ymlFile2 = '__tests__/after.yml';
+const wrongTypeFile = '__tests__/somefile.type';
+const notExistenFile = 'not_existen_file';
 
-const wrongFile = 'wrong_file';
-const wrongFileResult = `ERROR: File "${wrongFile}" not exist!`;
+const fileNotExistResult = `ERROR: File "${notExistenFile}" not exist!`;
+const unknownFileTypeResult = `ERROR: Unknown file type: "${wrongTypeFile}"`;
 
 const testResult = `{
     host: hexlet.io
@@ -20,8 +22,13 @@ const testResult = `{
 
 
 test('File exist', () => {
-  expect(gendiff(wrongFile, jsonFile2)).toEqual(wrongFileResult);
-  expect(gendiff(jsonFile1, wrongFile)).toEqual(wrongFileResult);
+  expect(gendiff(notExistenFile, jsonFile2)).toEqual(fileNotExistResult);
+  expect(gendiff(jsonFile1, notExistenFile)).toEqual(fileNotExistResult);
+});
+
+test('Unknown file type', () => {
+  expect(gendiff(wrongTypeFile, jsonFile2)).toEqual(unknownFileTypeResult);
+  expect(gendiff(jsonFile1, wrongTypeFile)).toEqual(unknownFileTypeResult);
 });
 
 test('Compare JSONs', () => {

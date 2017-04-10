@@ -15,5 +15,5 @@ export default (pathToFile) => {
     return yaml.safeLoad(fileContent);
   }
 
-  return 'ERROR: Unknown file type';
+  return `ERROR: Unknown file type: "${pathToFile}"`;
 };
