@@ -2,10 +2,13 @@
 
 import gendiff from '../src/gendiff';
 
-const testFile1 = '__tests__/before.json';
-const testFile2 = '__tests__/after.json';
+const jsonFile1 = '__tests__/before.json';
+const jsonFile2 = '__tests__/after.json';
+const ymlFile1 = '__tests__/before.yml';
+const ymlFile2 = '__tests__/after.yml';
+
 const wrongFile = 'wrong_file';
-const wrongFileResult = `File "${wrongFile}" not exist!`;
+const wrongFileResult = `ERROR: File "${wrongFile}" not exist!`;
 
 const testResult = `{
     host: hexlet.io
@@ -16,8 +19,20 @@ const testResult = `{
 }`;
 
 
-test('gendiff', () => {
-  expect(gendiff(wrongFile, testFile2)).toEqual(wrongFileResult);
-  expect(gendiff(testFile1, wrongFile)).toEqual(wrongFileResult);
-  expect(gendiff(testFile1, testFile2)).toEqual(testResult);
+test('File exist', () => {
+  expect(gendiff(wrongFile, jsonFile2)).toEqual(wrongFileResult);
+  expect(gendiff(jsonFile1, wrongFile)).toEqual(wrongFileResult);
+});
+
+test('Compare JSONs', () => {
+  expect(gendiff(jsonFile1, jsonFile2)).toEqual(testResult);
+});
+
+test('Compare YAMLs', () => {
+  expect(gendiff(ymlFile1, ymlFile2)).toEqual(testResult);
+});
+
+test('Compare JSON with YAML', () => {
+  expect(gendiff(jsonFile1, ymlFile2)).toEqual(testResult);
+  expect(gendiff(ymlFile1, jsonFile2)).toEqual(testResult);
 });

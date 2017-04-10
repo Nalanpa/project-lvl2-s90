@@ -1,6 +1,6 @@
-import fs from 'fs';
+import parse from './parse';
 
-const compare = (obj1, obj2, key) => {
+const compareKey = (obj1, obj2, key) => {
   if (obj1[key] && !obj2[key]) {
     return `  - ${key}: ${obj1[key]}\n`;
   } else if (!obj1[key] && obj2[key]) {
@@ -15,24 +15,29 @@ const compare = (obj1, obj2, key) => {
 };
 
 
+const compare = (obj1, obj2) => {
+  const obj1Keys = Object.keys(obj1)
+    .reduce((acc, key) => acc + compareKey(obj1, obj2, key), '');
+
+  const obj2Keys = Object.keys(obj2)
+    .filter(key => !obj1[key])
+    .reduce((acc, key) => acc + compareKey(obj1, obj2, key), '');
+
+  return `{\n${obj1Keys}${obj2Keys}}`;
+};
+
+
 export default (pathToFile1, pathToFile2) => {
-  if (!fs.existsSync(pathToFile1)) {
-    return `File "${pathToFile1}" not exist!`;
+  const file1 = parse(pathToFile1);
+  const file2 = parse(pathToFile2);
+
+  if (typeof file1 === 'string') {
+    return file1;
   }
 
-  if (!fs.existsSync(pathToFile2)) {
-    return `File "${pathToFile2}" not exist!`;
+  if (typeof file2 === 'string') {
+    return file2;
   }
 
-  const file1 = JSON.parse(fs.readFileSync(pathToFile1));
-  const file2 = JSON.parse(fs.readFileSync(pathToFile2));
-
-  const file1Keys = Object.keys(file1)
-    .reduce((acc, key) => acc + compare(file1, file2, key), '');
-
-  const file2Keys = Object.keys(file2)
-    .filter(key => !file1[key])
-    .reduce((acc, key) => acc + compare(file1, file2, key), '');
-
-  return `{\n${file1Keys}${file2Keys}}`;
+  return compare(file1, file2);
 };
