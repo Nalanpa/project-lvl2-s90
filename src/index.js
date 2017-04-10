@@ -1,3 +1,3 @@
-import commander from 'commander';
+import genDiff from './gendiff';
 
-export default commander;
+export default genDiff;

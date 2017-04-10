@@ -14,4 +14,7 @@ build:
 	rm -rf dist
 	npm run build
 
-.PHONY: install start publish lint build
+test:
+	npm test
+
+.PHONY: install start publish lint build test

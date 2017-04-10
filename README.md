@@ -8,5 +8,5 @@
 ## Setup
 
 ```
-make install
+make install nalanpa-second-project
 ```
