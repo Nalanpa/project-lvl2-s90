@@ -8,8 +8,8 @@ export default (pathToFile) => {
     return `ERROR: File "${pathToFile}" not exist!`;
   }
 
-  const fileContent = fs.readFileSync(pathToFile);
-  const ext = path.extname(pathToFile);
+  const fileContent = String(fs.readFileSync(pathToFile));
+  const format = path.extname(pathToFile).slice(1);
 
-  return parse(fileContent, ext);
+  return parse(fileContent, format);
 };

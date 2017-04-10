@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import fileToObject from './file_to_object';
+import readFile from './read_file';
 
 
 const compareKey = (obj1, obj2, key) => {
@@ -29,8 +29,8 @@ const compare = (obj1, obj2) => {
 
 
 export default (pathToFile1, pathToFile2) => {
-  const file1 = fileToObject(pathToFile1);
-  const file2 = fileToObject(pathToFile2);
+  const file1 = readFile(pathToFile1);
+  const file2 = readFile(pathToFile2);
 
   if (typeof file1 === 'string') {
     return file1;

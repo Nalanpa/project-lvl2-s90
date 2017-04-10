@@ -9,7 +9,7 @@ const ymlFile2 = '__tests__/__fixtures__/after.yml';
 const iniFile1 = '__tests__/__fixtures__/before.ini';
 const iniFile2 = '__tests__/__fixtures__/after.ini';
 const wrongFile = '__tests__/__fixtures__/somefile.type';
-const wrongType = '.type';
+const wrongType = 'type';
 const notExistenFile = 'not_existen_file';
 
 const fileNotExistResult = `ERROR: File "${notExistenFile}" not exist!`;
