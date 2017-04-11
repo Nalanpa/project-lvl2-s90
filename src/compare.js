@@ -1,31 +1,45 @@
 import _ from 'lodash';
 
-// const drawKey = (obj, key, level) => {
-//   ${key}: ${obj1[key]}\n`
-// };
+const isEqual = (obj1, obj2) =>
+     (obj1 && obj2 && typeof obj1 === 'object' && typeof obj2 === 'object') ||
+     (obj1 === obj2);
 
 
-const compareKey = (obj1, obj2, key, level) => {
-  const intend = 2;
-  const intend1 = ' '.repeat(intend * (1 + level));
-  const intend2 = ' '.repeat(intend * 2 * (1 + level));
+const compare = (obj1, obj2, level) => {
+  if (!obj1) return compare(obj2, obj2, level);
+  if (!obj2) return compare(obj1, obj1, level);
 
-  if (obj1[key] && !obj2[key]) {
-    return `${intend1}- ${key}: ${obj1[key]}\n`;
-  } else if (!obj1[key] && obj2[key]) {
-    return `${intend1}+ ${key}: ${obj2[key]}\n`;
-  } else if (obj1[key] !== obj2[key]) {
-    return `${intend1}+ ${key}: ${obj2[key]}\n` +
-           `${intend1}- ${key}: ${obj1[key]}\n`;
-  }
+  const compareKey = (o1, o2, key, lvl) => {
+    const intend = '  '.repeat(1 + (2 * lvl));
 
-  return `${intend2}${key}: ${obj1[key]}\n`;
-};
+    let sign;
+    let value;
+    let result = '';
+
+    if (o2[key]) {
+      sign = (isEqual(o1[key], o2[key])) ? '  ' : '+ ';
+      value = (typeof o2[key] === 'object') ?
+          compare(o1[key], o2[key], lvl + 1) :
+          o2[key];
+      result = `${intend}${sign}${key}: ${value}\n`;
+    }
+
+    if (o1[key] && !isEqual(o1[key], o2[key])) {
+      sign = '- ';
+      value = (typeof o1[key] === 'object') ?
+          compare(o1[key], o2[key], lvl + 1) :
+          o1[key];
+      result += `${intend}${sign}${key}: ${value}\n`;
+    }
+
+    return result;
+  };
 
 
-export default (obj1, obj2) => {
   const result = _.union(Object.keys(obj1), Object.keys(obj2))
-    .reduce((acc, key) => acc + compareKey(obj1, obj2, key, 0), '');
+    .reduce((acc, key) => acc + compareKey(obj1, obj2, key, level), '');
 
-  return `{\n${result}}`;
+  return `{\n${result}${'  '.repeat(2 * level)}}`;
 };
+
+export default compare;

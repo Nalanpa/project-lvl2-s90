@@ -4,6 +4,10 @@ import gendiff from '../src';
 
 const jsonFile1 = '__tests__/__fixtures__/before.tree.json';
 const jsonFile2 = '__tests__/__fixtures__/after.tree.json';
+const ymlFile1 = '__tests__/__fixtures__/before.tree.yml';
+const ymlFile2 = '__tests__/__fixtures__/after.tree.yml';
+const iniFile1 = '__tests__/__fixtures__/before.tree.ini';
+const iniFile2 = '__tests__/__fixtures__/after.tree.ini';
 
 const testResult =
 `{
@@ -31,6 +35,11 @@ const testResult =
         fee: 100500
     }
 }`;
+
+
+// test('Foo test', () => {
+//   expect(1).toEqual(1);
+// });
 
 test('Compare tree JSONs', () => {
   expect(gendiff(jsonFile1, jsonFile2)).toEqual(testResult);
