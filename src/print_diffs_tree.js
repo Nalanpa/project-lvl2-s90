@@ -9,7 +9,7 @@ const printObject = (obj, level) => {
 const printValue = (value, level) =>
   ((typeof value !== 'object') ? value : printObject(value, level));
 
-const printJson = (diffs, level = 0) => {
+const printTree = (diffs, level = 0) => {
   const indent = '  '.repeat(1 + (2 * level));
   const rows = diffs
     .map((item) => {
@@ -17,7 +17,7 @@ const printJson = (diffs, level = 0) => {
         case 'same':
           return `${indent}  ${item.key}: ${printValue(item.before, level + 1)}`;
         case 'keeped object':
-          return `${indent}  ${item.key}: ${printJson(item.object, level + 1)}`;
+          return `${indent}  ${item.key}: ${printTree(item.object, level + 1)}`;
         case 'added':
           return `${indent}+ ${item.key}: ${printValue(item.after, level + 1)}`;
         case 'removed':
@@ -35,4 +35,4 @@ const printJson = (diffs, level = 0) => {
   return `{\n${content}\n${'  '.repeat(2 * level)}}`;
 };
 
-export default printJson;
+export default printTree;

@@ -1,6 +1,6 @@
 {
   "name": "nalanpa-second-project",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Second learning project on Hexlet",
   "main": "dist/index.js",
   "bin": {
