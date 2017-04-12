@@ -1,9 +1,11 @@
 import printTree from './print_diffs_tree';
 import printPlain from './print_diffs_plain';
+import printJson from './print_diffs_json';
 
-export default (tree, format) => {
-  if (format === 'object') return printTree(tree);
-  if (format === 'plain') return printPlain(tree);
+export default (diffs, format) => {
+  if (format.toLowerCase() === 'object') return printTree(diffs);
+  if (format.toLowerCase() === 'plain') return printPlain(diffs);
+  if (format.toLowerCase() === 'json') return printJson(diffs);
 
   return `Unknown format: ${format}`;
 };

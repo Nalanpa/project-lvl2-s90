@@ -13,15 +13,15 @@ const makeDiffsObject = (obj1, obj2) => (
       }
       if (before && after && _.isPlainObject(before) && _.isPlainObject(after)) {
         const object = makeDiffsObject(before, after);
-        return { status: 'keeped object', key, before, after, object, type: getType(before) };
+        return { status: 'keeped object', key, object, type: getType(before) };
       }
       if (before && after && before !== after) {
         return { status: 'updated', key, before, after, type: getType(before) };
       }
       if (!after) {
-        return { status: 'removed', key, before, after, type: getType(before) };
+        return { status: 'removed', key, before, type: getType(before) };
       }
-      return { status: 'added', key, before, after, type: getType(after) };
+      return { status: 'added', key, after, type: getType(after) };
     })
 );
 
