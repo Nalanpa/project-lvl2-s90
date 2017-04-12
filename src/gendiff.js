@@ -1,8 +1,9 @@
 import readFile from './read_file';
-import compare from './compare';
+import makeDiffsObject from './make_diffs_object';
+import printDiffs from './print_diffs';
 
 
-export default (pathToFile1, pathToFile2) => {
+export default (pathToFile1, pathToFile2, format = 'object') => {
   const [data1, data2] = [pathToFile1, pathToFile2]
     .map(file => readFile(file));
 
@@ -14,5 +15,5 @@ export default (pathToFile1, pathToFile2) => {
     return data2;
   }
 
-  return compare(data1, data2, 0);
+  return printDiffs(makeDiffsObject(data1, data2), format);
 };

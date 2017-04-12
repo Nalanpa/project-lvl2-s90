@@ -10,6 +10,9 @@ publish:
 lint:
 	npm run eslint -- src
 
+lintall:
+	npm run eslint
+
 build:
 	rm -rf dist
 	npm run build
@@ -17,4 +20,4 @@ build:
 test:
 	npm test
 
-.PHONY: install start publish lint build test
+.PHONY: install start publish lint lintall build test

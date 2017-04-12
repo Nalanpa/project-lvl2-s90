@@ -37,10 +37,8 @@ const testResult =
 }`;
 
 
-// test('Foo test', () => {
-//   expect(1).toEqual(1);
-// });
-
-test('Compare tree JSONs', () => {
+test('Compare trees', () => {
   expect(gendiff(jsonFile1, jsonFile2)).toEqual(testResult);
+  // expect(gendiff(ymlFile1, ymlFile2)).toEqual(testResult);
+  // expect(gendiff(iniFile1, iniFile2)).toEqual(testResult);
 });
