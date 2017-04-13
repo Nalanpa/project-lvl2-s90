@@ -1,6 +1,6 @@
 import readFile from './read_file';
 import makeDiffsObject from './make_diffs_object';
-import printDiffs from './print_diffs';
+import printDiffs from './printers';
 
 
 export default (pathToFile1, pathToFile2, format = 'object') => {

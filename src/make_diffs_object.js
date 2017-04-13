@@ -9,19 +9,19 @@ const makeDiffsObject = (obj1, obj2) => (
       const after = obj2[key];
 
       if (before === after) {
-        return { status: 'same', key, before, after, type: getType(before) };
+        return { action: 'same', key, before, after, type: getType(before) };
       }
       if (before && after && _.isPlainObject(before) && _.isPlainObject(after)) {
-        const object = makeDiffsObject(before, after);
-        return { status: 'keeped object', key, object, type: getType(before) };
+        const children = makeDiffsObject(before, after);
+        return { action: 'keeped object', key, children, type: getType(before) };
       }
       if (before && after && before !== after) {
-        return { status: 'updated', key, before, after, type: getType(before) };
+        return { action: 'updated', key, before, after, type: getType(before) };
       }
       if (!after) {
-        return { status: 'removed', key, before, type: getType(before) };
+        return { action: 'removed', key, before, type: getType(before) };
       }
-      return { status: 'added', key, after, type: getType(after) };
+      return { action: 'added', key, after, type: getType(after) };
     })
 );
 

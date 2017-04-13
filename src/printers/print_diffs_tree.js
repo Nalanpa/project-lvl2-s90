@@ -13,11 +13,11 @@ const printTree = (diffs, level = 0) => {
   const indent = '  '.repeat(1 + (2 * level));
   const rows = diffs
     .map((item) => {
-      switch (item.status) {
+      switch (item.action) {
         case 'same':
           return `${indent}  ${item.key}: ${printValue(item.before, level + 1)}`;
         case 'keeped object':
-          return `${indent}  ${item.key}: ${printTree(item.object, level + 1)}`;
+          return `${indent}  ${item.key}: ${printTree(item.children, level + 1)}`;
         case 'added':
           return `${indent}+ ${item.key}: ${printValue(item.after, level + 1)}`;
         case 'removed':

@@ -1,3 +1,4 @@
+
 const printUpdatedValue = (before, after) =>
   ((typeof before !== 'object') ? `. From '${before}' to '${after}'` : ' with complex value');
 
@@ -8,11 +9,11 @@ const printAddedValue = value =>
 const printPlain = (diffs, path = '') => {
   const rows = diffs
     .map((item) => {
-      switch (item.status) {
+      switch (item.action) {
         case 'same':
           return undefined;
         case 'keeped object':
-          return printPlain(item.object, `${item.key}.`);
+          return printPlain(item.children, `${item.key}.`);
         case 'added':
           return `Property '${path}${item.key}' was added with ${printAddedValue(item.after)}`;
         case 'removed':
